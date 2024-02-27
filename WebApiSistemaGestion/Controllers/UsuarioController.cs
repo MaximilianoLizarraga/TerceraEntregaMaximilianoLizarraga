@@ -35,7 +35,7 @@ namespace WebApiSistemaGestion.Controllers
             }
         }
 
-        [HttpGet("ObtenerUsuarioPorNombre/{nombreDeUsuario}")]
+        [HttpGet("{nombreDeUsuario}")]
         public ActionResult<UsuarioDTO> ObtenerUsuarioPorNombre(string nombreDeUsuario)
         {
             try
@@ -64,7 +64,7 @@ namespace WebApiSistemaGestion.Controllers
 
         }
 
-        [HttpGet("ObtenerUsuarioPorUserPass/{usuario}/{password}")]
+        [HttpGet("{usuario}/{password}")]
         public ActionResult<UsuarioDTO> ObtenerUsuarioPorUserPass(string usuario, string password)
         {
             try
@@ -92,37 +92,37 @@ namespace WebApiSistemaGestion.Controllers
 
         }
 
-        [HttpGet("ObtenerUsuarioPorID/{id}")]
-        public ActionResult<UsuarioDTO> ObtenerUsuarioPorID(int id)
-        {
-            try
-            {
+        //[HttpGet("ObtenerUsuarioPorID/{id}")]
+        //public ActionResult<UsuarioDTO> ObtenerUsuarioPorID(int id)
+        //{
+        //    try
+        //    {
 
-                if (id < 0) { 
+        //        if (id < 0) { 
 
-                    return BadRequest(new { mensaje = $"el id es menor a 0 id= {id}", Status = "400" });
-                }
-                var usuarioObtenido = this.usuarioService.ObtenerUsuarioPorID(id);
+        //            return BadRequest(new { mensaje = $"el id es menor a 0 id= {id}", Status = "400" });
+        //        }
+        //        var usuarioObtenido = this.usuarioService.ObtenerUsuarioPorID(id);
 
-                if (usuarioObtenido is not null)
-                {
-                    return usuarioObtenido;
-                }
+        //        if (usuarioObtenido is not null)
+        //        {
+        //            return usuarioObtenido;
+        //        }
 
-                return NotFound(new { mensaje = $"el Usuario con id {id} no fue encontrado", Status = "404" });
-            }
-            catch (CustomHttpException ex)
-            {
-                return StatusCode(ex.HttpStatusCode, new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+        //        return NotFound(new { mensaje = $"el Usuario con id {id} no fue encontrado", Status = "404" });
+        //    }
+        //    catch (CustomHttpException ex)
+        //    {
+        //        return StatusCode(ex.HttpStatusCode, new { message = ex.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
 
-        }
+        //}
 
-        [HttpPost("AgregarUsuario")]
+        [HttpPost]
         public IActionResult AgregarUsuario([FromBody] UsuarioDTO usuarioDTO)
         {
             try
@@ -147,7 +147,7 @@ namespace WebApiSistemaGestion.Controllers
             }
         }
 
-        [HttpPut("ActualizarUsuarioPorId")]
+        [HttpPut]
         public IActionResult ActualizarUsuarioPorId([FromBody] UsuarioDTO usuarioDTO, [FromQuery] int idUsuario)
         {
             try
@@ -172,28 +172,28 @@ namespace WebApiSistemaGestion.Controllers
             }
         }
 
-        [HttpDelete("EliminarUsuario")]
+        //[HttpDelete("EliminarUsuario")]
 
-        public IActionResult EliminarUsuario([FromQuery] int idUsuario)
-        {
-            try {
-                if (this.usuarioService.EliminarUsuario(idUsuario))
-                {
-                    return this.Ok(new { message = $"El usuario con ID: {idUsuario} fue eliminado.", status = "200" });
-                }
-                else {
-                    return this.BadRequest(new { message = $"El usuario con ID: {idUsuario} no pudo ser eliminado", status = "400" });
-                }
-            }
-            catch (CustomHttpException ex)
-            {
-                return StatusCode(ex.HttpStatusCode, new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+        //public IActionResult EliminarUsuario([FromQuery] int idUsuario)
+        //{
+        //    try {
+        //        if (this.usuarioService.EliminarUsuario(idUsuario))
+        //        {
+        //            return this.Ok(new { message = $"El usuario con ID: {idUsuario} fue eliminado.", status = "200" });
+        //        }
+        //        else {
+        //            return this.BadRequest(new { message = $"El usuario con ID: {idUsuario} no pudo ser eliminado", status = "400" });
+        //        }
+        //    }
+        //    catch (CustomHttpException ex)
+        //    {
+        //        return StatusCode(ex.HttpStatusCode, new { message = ex.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
 
 
     }

@@ -11,8 +11,7 @@ namespace WebApiSistemaGestion.Controllers
     public class ProductoController : Controller
     {
 
-        private readonly ProductoService productoService; //Readonly permite que no se pueda modificar y solo se crea desde el constructor.
-
+        private readonly ProductoService productoService; 
         public ProductoController(ProductoService productoService)
         {
             this.productoService = productoService;
@@ -36,9 +35,9 @@ namespace WebApiSistemaGestion.Controllers
           
         }
 
-        [HttpGet("ObtenerProductosPorIdDeUsuario")]
+        [HttpGet("{idUsuario}")]
 
-        public IActionResult ObtenerProductosPorIdDeUsuario([FromQuery] int idUsuario)
+        public IActionResult ObtenerProductosPorIdDeUsuario( int idUsuario)
         {
             try
             {
@@ -64,35 +63,35 @@ namespace WebApiSistemaGestion.Controllers
             }
         }
 
-        [HttpGet("ObtenerProductoPorID")]
+        //[HttpGet("ObtenerProductoPorID")]
 
-        public IActionResult ObtenerProductoPorID([FromQuery]int id)
-        {
-            try
-            {
-                var productoObtenido = this.productoService.ObtenerProductoPorID(id);
+        //public IActionResult ObtenerProductoPorID([FromQuery]int id)
+        //{
+        //    try
+        //    {
+        //        var productoObtenido = this.productoService.ObtenerProductoPorID(id);
 
-                if (productoObtenido is not null)
-                {
-                    return Ok(productoObtenido);
-                }
-                else
-                {
-                    return NotFound(new { Message = $"Producto con id: {id} no encontrado", status = "404" });
-                }
-            }
-            catch (CustomHttpException ex)
-            {
-                return StatusCode(ex.HttpStatusCode, new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+        //        if (productoObtenido is not null)
+        //        {
+        //            return Ok(productoObtenido);
+        //        }
+        //        else
+        //        {
+        //            return NotFound(new { Message = $"Producto con id: {id} no encontrado", status = "404" });
+        //        }
+        //    }
+        //    catch (CustomHttpException ex)
+        //    {
+        //        return StatusCode(ex.HttpStatusCode, new { message = ex.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
 
 
-        [HttpPost("AgregarProducto")]
+        [HttpPost]
         public IActionResult AgregarProducto([FromBody] ProductoDTO productoDTO)
         {
             try
@@ -118,7 +117,7 @@ namespace WebApiSistemaGestion.Controllers
             }
         }
 
-        [HttpPut("ActualizarProductoPorId")]
+        [HttpPut]
 
         public IActionResult ActualizarProductoPorId([FromBody] ProductoDTO productoDTO)
         {
@@ -144,20 +143,20 @@ namespace WebApiSistemaGestion.Controllers
             }
         }
 
-        [HttpDelete("EliminarProducto")]
+        [HttpDelete("{idProducto}")]
 
-        public IActionResult EliminarProducto([FromQuery]int id)
+        public IActionResult EliminarProducto(int idProducto)
         {
             try
             {
 
-                if (this.productoService.EliminarProducto(id))
+                if (this.productoService.EliminarProducto(idProducto))
                 {
-                    return this.Ok(new { message = $"Producto con ID: {id} fue eliminado con exito", status = "200" });
+                    return this.Ok(new { message = $"Producto con ID: {idProducto} fue eliminado con exito", status = "200" });
                 }
                 else
                 {
-                    return this.BadRequest(new { message = $"El producto con ID: {id} no pudo ser eliminado", status = "400" });
+                    return this.BadRequest(new { message = $"El producto con ID: {idProducto} no pudo ser eliminado", status = "400" });
                 }
             }
             catch (CustomHttpException ex)

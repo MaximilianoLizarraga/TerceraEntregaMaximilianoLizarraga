@@ -37,7 +37,7 @@ namespace WebApiSistemaGestion.Controllers
         }
 
 
-        [HttpGet ("ObtenerProductosVendidosPorIdDeUsuario/{idUsuario}")]
+        [HttpGet ("{idUsuario}")]
 
         public IActionResult ObtenerProductosVendidosPorIdDeUsuario(int idUsuario)
         {

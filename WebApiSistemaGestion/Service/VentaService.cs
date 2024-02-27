@@ -50,15 +50,8 @@ namespace WebApiSistemaGestion.Service
         public VentaDTO? ObtenerVentaPorIdUsuario(int idUsuario)
         {
             try
-            {             
-                    var usuarioObtenido = this.context.Usuarios.Any(u => u.Id == idUsuario);
-                    if (!usuarioObtenido)
-                    {
-                        throw new CustomHttpException($"Usuario con ID: {idUsuario} no encontrado", 404);
-                    }
-
-
-                    Venta? ventaBuscada = this.context.Ventas.Where(v => v.IdUsuario == idUsuario).FirstOrDefault();
+            {
+                Venta? ventaBuscada = this.context.Ventas.Where(v => v.IdUsuario == idUsuario).FirstOrDefault();
                 if (ventaBuscada is not null)
                 {
                     var ventaDTO = VentaMapper.MapearVentaAVentaDTO(ventaBuscada);
@@ -67,7 +60,7 @@ namespace WebApiSistemaGestion.Service
                 }
 
                 //return null;
-                throw new CustomHttpException($"El usuario con ID: {idUsuario}, no tiene ventas asociadas",404);
+                throw new CustomHttpException($"Venta con id de usuario: {idUsuario} no encontrada",404);
 
             }
             catch (CustomHttpException ex)

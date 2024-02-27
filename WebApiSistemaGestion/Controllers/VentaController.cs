@@ -33,7 +33,7 @@ namespace WebApiSistemaGestion.Controllers
             }
         }
 
-        [HttpGet("ObtenerVentaPorIdUsuario/{idUsuario}")]
+        [HttpGet("{idUsuario}")]
         public IActionResult ObtenerVentaPorIdUsuario(int idUsuario)
         {
             try
@@ -58,32 +58,32 @@ namespace WebApiSistemaGestion.Controllers
             }
         }
 
-        [HttpPut("AgregarVenta")]
-        public IActionResult AgregarVenta([FromBody] VentaDTO ventaDTO)
-        {
-            try
-            {
-                if (this.ventaService.AgregarVenta(ventaDTO))
-                {
-                    return Ok(new { Message = "Venta Agregada de forma exitosa", Status = "200"});
-                }
-                else
-                {
-                    return Conflict(new { Message = "No se pudo agregar la venta", Status = "409" });
-                }
-            }
-            catch (CustomHttpException ex)
-            {
-                return StatusCode(ex.HttpStatusCode, new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+        //[HttpPut("AgregarVenta")]
+        //public IActionResult AgregarVenta([FromBody] VentaDTO ventaDTO)
+        //{
+        //    try
+        //    {
+        //        if (this.ventaService.AgregarVenta(ventaDTO))
+        //        {
+        //            return Ok(new { Message = "Venta Agregada de forma exitosa", Status = "200"});
+        //        }
+        //        else
+        //        {
+        //            return Conflict(new { Message = "No se pudo agregar la venta", Status = "409" });
+        //        }
+        //    }
+        //    catch (CustomHttpException ex)
+        //    {
+        //        return StatusCode(ex.HttpStatusCode, new { message = ex.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
 
-        }
+        //}
 
-        [HttpPost("FinalizarVenta")]
+        [HttpPost]
 
         public IActionResult FinalizarVenta([FromQuery]int idUsuario, [FromBody]List<ProductoDTO> listaProductoDTO)
         {
@@ -109,29 +109,29 @@ namespace WebApiSistemaGestion.Controllers
         }
 
 
-        [HttpDelete("EliminarVenta")]
+        //[HttpDelete("EliminarVenta")]
 
-        public IActionResult EliminarVenta([FromQuery]int id)
-        {
-            try {
-                if (this.ventaService.EliminarVenta(id))
-                {
-                    return Ok("La venta fue eliminada de forma correcta");
-                }
-                else
-                {
-                    return BadRequest($"La venta con el id: {id} no pudo ser eliminado");
-                }
+        //public IActionResult EliminarVenta([FromQuery]int id)
+        //{
+        //    try {
+        //        if (this.ventaService.EliminarVenta(id))
+        //        {
+        //            return Ok("La venta fue eliminada de forma correcta");
+        //        }
+        //        else
+        //        {
+        //            return BadRequest($"La venta con el id: {id} no pudo ser eliminado");
+        //        }
 
-            }
-            catch (CustomHttpException ex)
-            {
-                return StatusCode(ex.HttpStatusCode, new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+        //    }
+        //    catch (CustomHttpException ex)
+        //    {
+        //        return StatusCode(ex.HttpStatusCode, new { message = ex.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
     } 
 }

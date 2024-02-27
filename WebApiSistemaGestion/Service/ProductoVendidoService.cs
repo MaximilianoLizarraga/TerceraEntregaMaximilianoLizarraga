@@ -45,12 +45,6 @@ namespace WebApiSistemaGestion.Service
 
             try
             {
-                var usuarioObtenido = this.context.Usuarios.Any(u=> u.Id == idUsuario);
-                if (!usuarioObtenido)
-                {
-                    throw new CustomHttpException($"Usuario con ID: {idUsuario} no encontrado", 404);
-                }
-
                 var listaDeProductos = this.context.Productos.Where(p => p.IdUsuario == idUsuario).ToList(); 
 
                 if (listaDeProductos is not null)
